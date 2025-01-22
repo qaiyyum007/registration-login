@@ -8,13 +8,14 @@ import { User } from 'src/user/entities/user.entity';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/signup')
+  @Post('/register')
   signUp(@Body() { email, password }: RegisterDto): Promise<User> {
     return this.authService.register(email, password);
   }
 
   @Post('/login')
-  login(@Body() { email, password }: LoginDto): Promise<{ token: string }> {
+  async login(@Body() loginDto: LoginDto): Promise<{ accessToken: string }> {
+    const { email, password } = loginDto;
     return this.authService.login(email, password);
   }
 }

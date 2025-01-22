@@ -37,10 +37,9 @@ export class AuthService {
   ): Promise<{ accessToken: string }> {
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException('Invalid email or password');
     }
-
-    const payload = { sub: user.id, username: user.email };
+    const payload = { sub: user.id, email: user.email };
     const accessToken = this.jwtService.sign(payload);
     return { accessToken };
   }
