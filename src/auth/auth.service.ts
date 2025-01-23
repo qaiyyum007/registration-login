@@ -21,7 +21,7 @@ export class AuthService {
       where: { email },
     });
     if (existingUser) {
-      throw new BadRequestException('Username already exists');
+      throw new BadRequestException('email already exists');
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = this.userRepository.create({
